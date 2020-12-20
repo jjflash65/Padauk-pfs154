@@ -26,21 +26,29 @@
                           TM2C (timer2 counter register)
                           TM2S (timer2 scalar reigster)
 
-     erzeugt einen Interrupt alle 16 ms
+     siehe timer_2_3_reg.txt
+
+     erzeugt einen Interrupt alle 32.768 ms
    -------------------------------------------------------- */
 void tim2_init(void)
 {
-  // 0010         00               00                         = 0x20
-  // IHRC  output sel. disable     periode mode / no invers
-  TM2C = 0x20;
+  // 0001     00                    00                         = 0x10
+  // SYSCLK   output sel. disable   periode mode / no invers
 
-  // 0       00         01110            = 0x0e ==> 128 us
-  // 0       11         11111            = 0x7f ==>
-  // PWM-8   Prescale   clock divisior
+  TM2C = 0x10;
 
+  // 0        11          11111            = 0x7f
+  // PWM-8    prescale    clock divisior
+
+  // nach prescaler:  F_CPU(8 MHz) /64 (prescale)       => F_PRE = 125 kHz
+  // Taktfrequenz:    F_PRE / 32 (scale) = 3.90625 kHz  => t= 0.256 ms
   TM2S = 0x7f;
 
+  // Boundaryregister (wie compare match), ausloesen des Interrupts
+  // nach 0x80 = 128d Zaehlimpulsen
+  // Interruptrequest nach: t * 128 = 32.768 ms
   TM2B = 0x80;
+
 
   __engint();                   // grundsaetzlich Interrupt zulassen
   INTEN |= INTEN_TM2;           // Timerinterrupt zulassen
@@ -63,9 +71,9 @@ void interrupt(void) __interrupt(0)
   {
     // LED blinken geschieht ausschliesslich im Interrupthandler
 
-
     cx++;
-    cx= cx % 62;
+    cx= cx % 31;
+    // 31 * 32.768 = 1.015 s
     if (!cx)  led_toggle();
 
     INTRQ &= ~INTRQ_TM2;          // Interruptanforderung quittieren
