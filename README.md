@@ -19,7 +19,6 @@ Installation lauffaehig ist.<br>
 - Aufruf: make clean<br>
 - Aufruf: make <br>
 - Aufruf: make flash<br>
-<br>
 
 ## Programmer
 <br>
