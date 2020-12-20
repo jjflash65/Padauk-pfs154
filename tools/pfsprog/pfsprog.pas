@@ -11,10 +11,11 @@
 program pfsprog;
 
 uses
-  sysutils,synaser, crt;
+  sysutils,synaser;
 
 const
   dtime_hi        = 83;
+  dtime_chsend    = 10;
   dtime_send      = 200;
 
 var
@@ -536,10 +537,10 @@ begin
   writeln(' waiting for programmer...');
   if (nowait= false) then 
   begin
-    sleep(2200);
+    sleep(3200);
   end else
   begin
-    sleep(200);
+    sleep(300);
   end;  
   writeln;
 
@@ -624,7 +625,9 @@ begin
                   b:= flashmem[mcx];
                   inc(mcx);
                   ser.sendbyte(b);
+//                  sleep(dtime_chsend);
                 end;
+                sleep(dtime_send);
                 sleep(dtime_send);
 
                 ch:= chr(ser.recvbyte(1));

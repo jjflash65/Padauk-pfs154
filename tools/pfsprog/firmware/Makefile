@@ -4,7 +4,7 @@
 #
 ############################################################
 
-PROJECT    = pfs154_prog2
+PROJECT    = pfs154_prog2_1
 
 
 INC_DIR    = -I./ -I../include
