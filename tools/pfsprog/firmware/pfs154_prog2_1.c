@@ -35,18 +35,21 @@
 #define adc_low       ADCL
 #define adc_high      ADCH
 
-#define delay   _delay_ms
+#define delay         _delay_ms
+
+#define gain_vdd_raw  2.0
+#define gain_vpp_raw  5.7
 
 
 // PD5 ist alternate Function von "Output Counter2 Match B"  (OC0B)
 // vdd_pin Verbindung zu OP mit R2/R1 = 4.7 / 4.7k = Gain 2
 #define vdd_pin_init()     PD5_output_init()
-float gain_vdd = 2.0;
+float gain_vdd = gain_vdd_raw;
 
 // PB1 ist alternate Function von "Output Counter1 Match A"  (OC1A)
 // vpp_pin Verbindung zu OP mit R2/R1 = 4.7 / 1k = Gain 5.7
 #define vpp_pin_init()     PB1_output_init()
-float gain_vpp = 5.7;
+float gain_vpp = gain_vpp_raw;;
 
 // PD3 ist alternate Function von "Output Counter2 Match B"  (OC2B)
 #define dcdcpin_init()     PD3_output_init()
@@ -402,6 +405,8 @@ void calibrate(void)
   uint16_t w;
   float    gvdd, gvpp;
 
+  gain_vdd= gain_vdd_raw;
+  gain_vpp= gain_vpp_raw;
   vpp_set(8.0);
   vdd_set(6.0);
   printf("\n\n\r Calibrate the PWM to analog output\n\r");
@@ -776,10 +781,17 @@ int main(void)
     do
     {
       ch= uart_getchar();
-    } while ((ch != 'P') && (ch != 'R') && (ch != 'r'));
+    } while ((ch != 'P') && (ch != 'R') && (ch != 'r') && (ch != 'i'));
 
     switch (ch)
     {
+      case 'i' :
+      {
+        calibrate();
+        break;                  // hierher sollte das Programm nie kommen
+                                // weil Calibrate mit einer Endlosschleife
+                                // beendet wird
+      }
       // Programm device
       case 'P' :
       {
