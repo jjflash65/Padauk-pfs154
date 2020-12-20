@@ -1,0 +1,75 @@
+16-Bit Timer T16 des PFS154
+----------------------------------------------------------------
+
+Das Register des T16 wird mittels des Modusregisters T16M initialisiert und
+kontrolliert. Das Zaehlregisters des Timers selbst ist unter __sfr16 erreichbar
+und traegt innerhalb dieses Frameworks den Namen "T16C".
+
+Eine Adresse dieses Registers sucht man vergebens, weil innerhalb des Controllers
+dieses das einzige 16-Bit Register ist und es Maschinenbefehle gibt, deren
+einzige Aufgabe es ist, dieses Zaehlregister auszulesen.
+
+Im Vergleich zu anderen Mikrocontrollern ist die Controlle des
+16-Bit Timers "etwas anderst".
+
+     T16M
+     ------------------------------------------------------
+     Bit 7:5      |  000 Timer disable
+                  |  001 CLK
+                  |  010 reserved
+                  |  011 fallende Taktflanke an PA4
+     Taktquelle   |  100 int. Hi-Speed RC-Oszillator (IHRC)
+                  |  101 ext. Oszillator
+                  |  110 int. Lo-Speed RC-Oszillator (ILRC)
+                  |  111 fallende Taktflanke an PA0
+     ------------------------------------------------------
+     Bit 4:3      |   00  / 1
+                  |   01  / 4
+     Taktteiler   |   10  / 16
+                  |   11  / 64
+     ------------------------------------------------------
+                  |   Interruptquelle. Eine Aenderung des
+                  |   eines Bits im Timerregister T16C
+                  |   loest einen Interrupt aus (faktisch
+                  |   ein weiterer Teiler)
+                  |----------------------------------------
+                  |   000 Bit  8  ==> Teiler / 256
+     Bit 2:0      |   001 Bit  9
+                  |   010 Bit 10
+                  |   011 Bit 11
+                  |   100 Bit 12
+                  |   101 Bit 13
+                  |   110 Bit 14
+                  |   111 Bit 15  ==> Teiler / 32768
+
+Die Bits 5 - 7 des Registers geben die Taktquelle an, von denen das Zaehlregister
+T16C gespeisst wird, Bits 3 - 4 einen Taktteiler, der zwischen der Taktquelle und
+dem Zaehlregister dazwischen geschaltet ist.
+
+Bit 0 - 2 geben an, wann ein Timerinterrupt ausgeloest wird. Ein Interrupt wird
+ausgeloest, wenn sich der logische Zustand des entsprechenden Bits aender. Faktisch
+kann hiermit ein weiteres Teilerverhaeltnis (zusaetzlich zum Taktvorteiler)
+erreicht werden.
+
+Grundsaetzlich koennte man dieses Vorgehen als Timer-Overflow Interrupt bezeichnen,
+bei dem bestimmt werden kann, bei welchem Wert ein Overflow erreicht (und somit
+ein Interrupt ausgeloest) wird.
+
+Vorgehensweise zum Erzeugen eines Millisekundentickers fuer 8 MHz IHRC (*1)
+-----------------------------------------------------------------------------------
+
+- Taktquelle IHRC
+- Taktvorteiler = 1
+- Interruptausloesung bei Bit 13 (entspricht / 8192)
+
+ ==> T16M= 0x85;
+
+ Dieses wuerde eine Interruptfrequenz von 8000000 / 8192 = 976 Hz entsprechen und
+ waere fuer eine Interruptintervallzeit von 1 ms zu langsam (Intervallzeit waere
+ laenger als 1 ms). Um 1 ms zu erreichen muss somit der Zaehlerstand nicht auf
+ 0 sonder auf 192 gesetzt werden, damit nach genau 8000 Impulsen ein Wechsel des
+ Bit 13 von 0 auf 1 erfolgt (und somit eine Zeit von 1 ms gegeben ist).
+
+-----------------------------------------------------------------------------------
+(*1) : IHRC interner High-Speed RC-Oszillator, Angabe wird mittels -DF_CPU=8000000
+       dem Compiler mit uebergeben (Angabe im Makefile)

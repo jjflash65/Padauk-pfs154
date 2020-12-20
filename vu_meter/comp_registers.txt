@@ -1,0 +1,58 @@
+/*
+     Comparator Control Register GPCC
+     ------------------------------------------------------------
+     Bit 7        |   enable comparator
+                  |   0 / 1 : disable / enable
+     ------------------------------------------------------------
+     Bit 6        |   comparator result
+                  |   0 : +ue < -ue
+                  |   1 : +ue > -ue
+     ------------------------------------------------------------
+     Bit 5        |   comparator result sampled by TM2_CLK
+                  |   0 : result output NOT sampled by TM2_CLK
+                  |   1 : result output sampled by TM2_CLK
+     ------------------------------------------------------------
+     Bit 4        |   invert result output
+                  |   0 : output not inverted
+                  |   1 : output inverted
+     ------------------------------------------------------------
+                  |   selection input source of -ue
+                  |----------------------------------------------
+                  |   000 : PA3
+                  |   001 : PA4
+     Bit 3:1      |   010 : int. reference 1.2V
+                  |   011 : int. voltage divider (see GPCS)
+                  |   100 : PB6
+                  |   101 : PB7
+                  |   11x : reserved
+     ------------------------------------------------------------
+     Bit 0        |   selection input source of +e
+                  |   0 : int. voltage divider (see GPCS)
+                  |   1 : PA4
+
+    Note: used comparator analog pin must be disabled as a digital
+          input.
+    Example:
+                                      // PADIER_TMP is defined in
+                                      // init-sequenz
+          PAC &= ~(MASK4);            // PA4 as inpput
+          PAPH &= ~(MASK4);           // no Pullup-resistor
+          PADIER_TMP &= ~(MASK4);     // PA4 digital input  disable
+          PADIER= PADIER_TMP;         // Register write
+
+     Comparator Selection Register GPCS
+     ------------------------------------------------------------
+     Bit 7        |   comparator output enable to PA0
+                  |   0 / 1 : disable / enable
+     ------------------------------------------------------------
+     Bit 6        |   reserved
+     ------------------------------------------------------------
+     Bit 5        |   selection high range resistor divider
+     ------------------------------------------------------------
+     Bit 4        |   selection low range resistor divider
+     ------------------------------------------------------------
+     Bit 3:0      |   select divider output
+                  |   0000 (lowest voltage) - 1111 (highest)
+
+
+*/

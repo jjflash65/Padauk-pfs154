@@ -1,0 +1,92 @@
+/*
+     Comparator Control Register GPCC
+     ------------------------------------------------------------
+     Bit 7        |   enable comparator
+                  |   0 / 1 : disable / enable
+     ------------------------------------------------------------
+     Bit 6        |   comparator result
+                  |   0 : +ue < -ue
+                  |   1 : +ue > -ue
+     ------------------------------------------------------------
+     Bit 5        |   comparator result sampled by TM2_CLK
+                  |   0 : result output NOT sampled by TM2_CLK
+                  |   1 : result output sampled by TM2_CLK
+     ------------------------------------------------------------
+     Bit 4        |   invert result output
+                  |   0 : output not inverted
+                  |   1 : output inverted
+     ------------------------------------------------------------
+                  |   selection input source of -ue
+                  |----------------------------------------------
+                  |   000 : PA3
+                  |   001 : PA4
+     Bit 3:1      |   010 : int. reference 1.2V
+                  |   011 : int. voltage divider (see GPCS)
+                  |   100 : PB6
+                  |   101 : PB7
+                  |   11x : reserved
+     ------------------------------------------------------------
+     Bit 0        |   selection input source of +e
+                  |   0 : int. voltage divider (see GPCS)
+                  |   1 : PA4
+
+     Note: used analog pin must be disabled as a digital input
+     Example to disable:
+                                      // PADIER_TMP is defined in
+                                      // init-sequenz
+          PAC &= ~(MASK4);            // PA4 as inpput
+          PAPH &= ~(MASK4);           // no Pullup-resistor
+          PADIER_TMP &= ~(MASK4);     // PA4 digital input  disable
+          PADIER= PADIER_TMP;         // Register write
+
+
+
+     Comparator Selection Register GPCS
+     ------------------------------------------------------------
+     Bit 7        |   comparator output enable to PA0
+                  |   0 / 1 : disable / enable
+     ------------------------------------------------------------
+     Bit 6        |   reserved
+     ------------------------------------------------------------
+     Bit 5        |   selection high range resistor divider
+     ------------------------------------------------------------
+     Bit 4        |   selection low range resistor divider
+     ------------------------------------------------------------
+     Bit 3:0      |   select divider output
+                  |   0000 (lowest voltage) - 1111 (highest)
+
+
+     -----------------------------------------------------------
+     Kombinationsmoeglichkeiten von GPCS und die resultierende
+     Referenzspannung am Komparatoreingang
+     -----------------------------------------------------------
+
+        GPCS[3:0] | Abgriff |           GPCS[5:4]
+                  |    Nr.  |   0x00    0x10    0x20    0x30
+        ------------------------------------------------------
+                  |         |           Ua_mux [V]
+        ------------------------------------------------------
+          0x00    |    1    |  1,406   0,208   1,125   0,156
+          0x01    |    2    |  1,563   0,417   1,250   0,313
+          0x02    |    3    |  1,719   0,625   1,375   0,469
+          0x03    |    4    |  1,875   0,833   1,500   0,625
+          0x04    |    5    |  2,031   1,042   1,625   0,781
+          0x05    |    6    |  2,188   1,250   1,750   0,938
+          0x06    |    7    |  2,344   1,458   1,875   1,094
+          0x07    |    8    |  2,500   1,667   2,000   1,250
+          0x08    |    9    |  2,656   1,875   2,125   1,406
+          0x09    |   10    |  2,813   2,083   2,250   1,563
+          0x0A    |   11    |  2,969   2,292   2,375   1,719
+          0x0B    |   12    |  3,125   2,500   2,500   1,875
+          0x0C    |   13    |  3,281   2,708   2,625   2,031
+          0x0D    |   14    |  3,438   2,917   2,750   2,188
+          0x0E    |   15    |  3,594   3,125   2,875   2,344
+          0x0F    |   16    |  3,750   3,333   3,000   2,500
+
+     Oder-Verknuepfung der Werte GPCS[5:4] und GPCS[3:0]
+     ergeben den Wert der Referenzspannung am Komparator.
+
+     Bsp.: Wert GPCS= 0x3B ergibt bei einer Vdd = 5.0V
+     einen Referenzwert von: 1,875 V
+
+*/

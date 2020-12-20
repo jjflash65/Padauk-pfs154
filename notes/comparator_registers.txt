@@ -1,0 +1,69 @@
+/* --------------------------------------------------------
+                  Comparator Registers
+
+
+   GPCC - Comparator Control Register
+   Bit    Bedeutung
+   ----------------------------------------------------
+    7     Enable comparator,   0/1  disable/enable
+    6     Komparatorergebnis,   0: +Ue < -Ue
+                                1: +Ue > -ue
+    5     Output sampled by TM2_CLK
+    4     Ausgangsinvertierung  0: nichtinvert.
+                                1: invertierend
+   3-1    Quelle -Ue    000: PA3
+                        001: PA4
+                        010: interne 1,2V Referenz
+                        011: internens Widerstandsnetz
+                        100: PB6
+                        101: PB7
+                        11x: reserved
+
+    0     Quelle +Ue    0 : internes Widerstandsnetz
+                        1 : PA4
+
+
+    GPCS - Comparator Selection Register
+    Bit    Bedeutung
+   ----------------------------------------------------
+     7     Output enable to PA0
+     6     reserviert
+     5     High range Widerstandsnetz
+     4     Low  range Widerstandsnetz
+    3-0    Abgriff am Widerstandsnetz, 0000 : unterer Abgriff
+                                       1000 : oberer Abgriff
+
+   ------------------------------------------------------------------------------
+
+   Das Widerstandsnetz besteht aus einem umschaltbargen
+   Spannungsteiler, der zwischen Vdd und Vss liegt:
+
+       | High Range |          Spg.teiler 16 Abgriffe      | Low Range |
+
+   Vdd o--- 8R -- 8R  GPCS.5=1 -   --- R -- R ... R -- R    GPCS.4= 0  8R ---o GND
+                |                |        |    |    |     |
+                 ---  GPCS.5=0 - |        |    |    |       GPCS.4= 1  ------o GND
+                                 |        |    |    |
+
+   Spannungsteiler besteht somit aus einem umschaltbaren
+   Vorwiderstand mit 8*R (GPCS.5= 0) oder 16*R (GPCS.5= 1)
+   16 einzelnen Widerstaenden R und einem Widerstand gegen
+   GND mit 8*R (GPCS.4= 0) oder 0*R (GPCS=1)
+
+   Bsp.:
+   GPCS.5= 0; GPCS4= 0; => U_hi8R = 1/4 Vdd, U_lo8R = 1/4 Vdd
+                           U_16R = 1/2 Vdd
+
+   Somit koennen Spannungen am Abgriff von 1/4 Vdd
+   (GPCS.3-0 = 0000) bis 3/4 Vdd (GPCS.3-0 = 1111) in
+   16 Stufen eingestellt werden:
+
+   ((n+1/32) * Vdd) + 1/4 * Vdd    // n = GPCS.3-0 in dezimal
+
+   Vdd= 5V, GPCS.5= 0, GPCS.4= 0, GPCS.3-1= 0011
+
+   GPCS= 0x03 => V_rintern= 1.71V
+   --------------------------------------------------------
+
+
+   -------------------------------------------------------- */

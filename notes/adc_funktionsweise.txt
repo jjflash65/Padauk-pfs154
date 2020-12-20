@@ -1,0 +1,74 @@
+--------------------------------------------------------
+  Realisierung eines Analog-Digitalwandlers mittels
+  einfachster Konstantstromquelle und internem
+  Spannungskomparator des PADAUK PFS154
+--------------------------------------------------------
+
+                + 5V      + 5V
+                  ^         ^
+                  |         |
+                  |         |
+                  |        +-+ R2
+                  |        | |
+                  |        | | 4,7k
+                  |        | |
+               / +-+       +-+
+              / \| |        |
+                 \ | 10k    |
+              R1 |\        |<                 Umess o---+------> PA4
+                 | |\------|  BC547                     |
+                 +-+       |\                           |
+                  |         |                          +-+
+                  |         |                          | |
+   PA3 <--------------------+                          | | 1M
+                  |         |                          | |
+                  |         |  100n                    +-+
+                  |        ---                          |
+                  |        ---                          |
+                  |         |                           |
+                 ---       ---                         ---
+
+
+     Funktionsprinzip:
+
+     Eine sehr einfache Konstantstromquelle laedt einen
+     Kondensator der dadurch mit einen (nahezu) linearen
+     Spannungsanstieg geladen wird.
+
+     PA3 schliesst den Kondensator kurz und dieser ist
+     somit entladen. Wird PA3 nun von digitalem Ausgang auf
+     analogen Eingang umgeschaltet ist PA3 nun der
+     + Eingang des Komparators.
+
+     Die Zeit, bis die Spannung am Kondensator die Spannung am
+     - Eingang des Komparators (zu messende Spannung) ueberschreitet,
+     wird ermittelt und entspricht somit direkt proportional
+     der angelegten Spannung.
+
+
+     Funktionsweise der "Einfachstkonstantstromquelle"
+     ----------------------------------------------------------
+
+     Eine hinreichend stabile Versorgungsspannung wird voraus
+     gesetzt, die Stabilitaet (nicht der Absolutwert der
+     Spannung) bestimmt die spaetere Genauigkeit des ADC, da
+     diese die Referenzspannung darstellt.
+
+     Mittels des Trimmers R1 kann die Spannung +5V <-> Basis
+     eingestellt werden. Diese Spannung veraendert sich nicht
+     und ist somit konstant. Am Widerstand R2 betraegt die
+     Spannung somit die eingestellte Spannung minus der Ube des
+     Transistors. Die Ube betraegt (annaehernd) konstant 0,68V
+     und somit aendert sich die Spannung am R2 ebenfalls nicht.
+     Durch ihn fliesst somit ein konstanter Strom und dieser
+     in den Emitter des Transistors.
+
+     Vernachlaessigt man den Basisstrom (der aber ebenfalls
+     konstant sein sollte) entspricht der Strom in den Emitter
+     dem Strom, der aus dem Kollektor fliesst und somit ist der
+     Kollektorstrom ebenfalls konstant.
+
+     ---------------------------------------------------------
+
+     Wichtigstes Merkmal: Der Kondensator wird hier mit einem
+     konstanten Strom geladen

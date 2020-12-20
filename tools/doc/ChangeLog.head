@@ -1,0 +1,100 @@
+2020-09-27 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c,
+	  src/z80/main.c,
+	  device/lib/r3ka/mulchar.s,
+	  device/lib/r3ka/Makefile.in:
+	  Use mul for r3ka, RFE #372.
+
+2020-09-27 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/ralloc2.cc,
+	  src/z80/peeph.def,
+	  src/z80/peeph-r2k.def,
+	  src/SDCCval.h,
+	  src/SDCCval.c:
+	  Small improvements for z80 and related.
+
+2020-09-27 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c:
+	  Improve speed of r2k builtins.
+	* src/SDCCast.c:
+	  Optimize strcpy on Rabbits.
+	* src/port.h:
+	  Prepare for r2ka port.
+
+2020-09-26 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c:
+	  Improve use of Rabbit instructions.
+
+2020-09-25 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c,
+	  device/lib/r2k/crt0.s,
+	  src/SDCCgen.h,
+	  src/SDCCgen.c,
+	  device/lib/r2k/memcpy.s,
+	  device/lib/r2k/memmove.s:
+	  Work around Rabbit 2000 / 3000 ldir / lddr wait state bugs.
+	* src/z80/z80.h:
+	  Prepare for r2ka port.
+
+2020-09-25 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c:
+	  Work around Rabbit 2000 mul wait state bug.
+
+2020-09-25 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c:
+	  Fix bug #3105.
+
+2020-09-23 Sergey Belyashov <sergey.belyashov@gmail.com>
+
+	* configure,
+	  configure.ac:
+	  Apply patch #357 from Tim Stahlhut: fix bug #3114.
+
+2020-09-23 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/peep.c:
+	  Fix handling of ioi, ioe in peephole optimizer, including bug #3118.
+
+2020-09-20 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c:
+	  Fix bug #3116.
+
+2020-09-18 Sergey Belyashov <sergey.belyashov@gmail.com>
+
+	* sdcc/sim/ucsim/app.cc,
+	  sdcc/sim/ucsim/doc/ucsim.1:
+	  Apply part of patch #349: simulator rng seed option
+
+2020-09-17 Sergey Belyashov <sergey.belyashov@gmail.com>
+
+	* device/lib/gbz80/abs.s,
+	  device/lib/gbz80/strlen.s:
+	  Assembler optimized abs() and strlen() for GBZ80.
+
+2020-09-17 Sergey Belyashov <sergey.belyashov@gmail.com>
+
+	* device/lib/_memset.c:
+	  More optimized memset implementation.
+
+2020-09-17 Sergey Belyashov <sergey.belyashov@gmail.com>
+
+	* sim/ucsim/app.cc,
+	  sim/ucsim/chars.cc,
+	  sim/ucsim/errorcl.h,
+	  sim/ucsim/option.cc,
+	  sim/ucsim/optioncl.h,
+	  sim/ucsim/p1516.src/p1516.cc,
+	  sim/ucsim/pdk.src/pdk.cc,
+	  sim/ucsim/pobj.cc,
+	  sim/ucsim/pobjcl.h,
+	  sim/ucsim/pobjt.h,
+	  sim/ucsim/sim.src/brk.cc,
+	  sim/ucsim/sim.src/brkcl.h,

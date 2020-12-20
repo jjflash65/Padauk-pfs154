@@ -1,0 +1,34 @@
+
+
+/* -------------------------------------------------
+     Lookup-table fuer NTC-Widerstand
+     R25-Wert: 10.00 kOhm
+     Pullup-Widerstand: 10.00 kOhm
+     Materialkonstante beta: 3977
+     Aufloesung des ADC: 8 Bit
+     Einheit eines Tabellenwertes: 0.1 Grad Celcius
+     Temperaturfehler der Tabelle: 0.7 Grad Celcius
+   -------------------------------------------------*/
+const int ntctable[] = {
+  1259, 1009, 759, 618, 518, 437, 369, 307, 
+  250, 195, 140, 84, 23, -45, -130, -253, 
+  -376
+};
+
+/* -------------------------------------------------
+                     ntc_gettemp
+
+    zuordnen des Temperaturwertes aus gegebenem
+    ADC-Wert.
+   ------------------------------------------------- */
+int ntc_gettemp(uint16_t adc_value)
+{
+  int p1,p2;
+
+  // Stuetzpunkt vor und nach dem ADC Wert ermitteln.
+  p1 = ntctable[ (adc_value >> 4)    ];
+  p2 = ntctable[ (adc_value >> 4) + 1];
+
+  // zwischen beiden Punkten interpolieren.
+  return p1 - ( (p1-p2) * (adc_value & 0x000f) ) / 16;
+}
