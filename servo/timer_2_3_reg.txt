@@ -1,0 +1,111 @@
+-----------------------------------------------------------------------
+                         Registerbeschreibungen:
+-----------------------------------------------------------------------
+
+Anmerkung:
+
+   Im periodic-mode gilt IHRC= SYSCLK / 2 !!!! SYSCLK der Angabe
+   F_CPU im Setup
+
+   Im PWM-Mode ist IHRC= 16MHz
+
+ ######################################################################
+                   Timer Control Register: TM2C / TM3C
+                   Resetvalue: 0x00
+ ######################################################################
+     ------------------------------------------------------------
+     Bit 7:4      |   clock source (r/w)
+                  |
+                  |   0000 : disable
+                  |   0001 : SYSCLK
+                  |   0010 : IHRC (int. RC-Oscillator)
+                  |   0011 : EOSC (ext. ocillator)
+                  |   0100 : IRLC (int. low-speed ocillator)
+                  |   0101 : comparator output
+                  |   1000 : PA0 (rising edge)
+                  |   1001 : /PA0 (falling edge)
+                  |   1010 : PB0 (rising edge)
+                  |   1011 : /PB0 (falling edge)
+                  |   1100 : PA4 (rising edge)
+                  |   1101 : /PA4 (falling edge)
+                  |
+                  |   all others reserved
+     ------------------------------------------------------------
+     Bit 3:2      |   Timer output (r/w)
+                  |
+                  |      |   Timer2    |   Timer3   |
+                  |--------------------|------------|
+                  |  00  |   disable   |   disable  |
+                  |  01  |   PB2       |   PB5      |
+                  |  10  |   PA3       |   PB6      |
+                  |  11  |   PB4       |   PB7      |
+     ------------------------------------------------------------
+     Bit 1        |   Mode selection (r/w)
+                  |
+                  |   0 : normal / periodic mode
+                  |   1 : PWM-Mode *
+     ------------------------------------------------------------
+     Bit 0        |   invert polarity (r/w)
+                  |
+                  |   0 : no invert
+                  |   1 : invert
+     ------------------------------------------------------------
+
+     * im PWM - Modus wird die gewaehlte Taktquelle aus Bits 7:4
+       durch 256 geteilt (=> 2^8, hieraus wird das PWM generiert)
+
+ ######################################################################
+                   Timer Counter Register: TM2CT / TM3CT
+                   Resetvalue: 0x00
+ ######################################################################
+     ------------------------------------------------------------
+     Bit 7:0      |   Counter value timer (r/w)
+     ------------------------------------------------------------
+
+
+ ######################################################################
+                   Timer Scalar Register: TM2S / TM3S
+                   Resetvalue: 0x00
+ ######################################################################
+     ------------------------------------------------------------
+     Bit 7        |   PWM resolution (write only)
+                  |
+                  |   0 : 8-Bit
+                  |   1 : 6-Bit
+     ------------------------------------------------------------
+     Bit 6:5      |   Clock prescaler (write only)
+                  |
+                  |   00 : div 1
+                  |   01 : div 4
+                  |   10 : div 16
+                  |   11 : div 64
+     ------------------------------------------------------------
+     Bit 4:0      |   Clock scalar
+                  |
+                  |   divide the prescaled clock by the value
+                  |   (bit4:0) + 1. Resulting range is
+                  |   1 to 32
+     ------------------------------------------------------------
+
+ ######################################################################
+                   Timer Bound Register: TM2B / TM3B
+                   Resetvalue: 0x00
+ ######################################################################
+
+     Das Boundregister beinhaltet 2 Funktionen.
+
+     "normaler" Betrieb (periodical mode):
+
+        entspricht einem "compare match" Register. Erreicht ein Zaehler-
+        inhalt den Wert des Bound-Registers loest es bei verfuegbarem
+        Interruptrequest einen Interrupt aus, der Zaehlerinhalt wird
+        zu 0 gesetzt.
+
+     PWM mode:
+
+        Das Bound-Register bestimmt den Duty-Cycle (Puls- Pausever-
+        haeltnis).
+
+     ------------------------------------------------------------
+     Bit 7:0      |   bound value (write only)
+     ------------------------------------------------------------
