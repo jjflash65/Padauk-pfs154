@@ -22,7 +22,7 @@
 #define servo_clr()     PA0_clr()
 #define servo_toggle()  PA0_toggle()
 
-uint16_t servo_winkel = 75;
+uint16_t servo_winkel = 50;
 
 /* --------------------------------------------------------
                           tim3_init
@@ -33,7 +33,7 @@ uint16_t servo_winkel = 75;
 
      siehe timer_2_3_reg.txt
 
-     erzeugt einen Interrupt alle 10 us
+     erzeugt einen Interrupt alle 20 us
    -------------------------------------------------------- */
 void tim3_init(void)
 {
@@ -95,7 +95,7 @@ void main(void)
 
   // das verwendete Servo des Demos hier benoetigte andere
   // Puls-Pause Verhaeltnis und so wird der Auschlag links-
-  // rechts mit Werten von 40 .. 50 realisier !
+  // rechts mit Werten von 40 .. 150 realisier !
   while(1)
   {
     for (i= 40; i< 150; i++)
