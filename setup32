@@ -1,0 +1,15 @@
+#!/bin/bash
+echo "--------------------------------------------------------------"
+echo "                          setup32"
+echo ""
+echo "  richtet die Toolchain fuer ein 32-Bit Linux ein. Sollte"
+echo "  dies faelschlicherweise aufgerufen worden sein und es sollte"
+echo "  eine 64-Bit Toolchain eingerichtet werden, so einfach"
+echo "  setup64 aufrufen"
+echo "--------------------------------------------------------------"
+rm -f -r ./tools/bin
+mkdir -p ./tools/bin
+cp ./tools/bin32/* ./tools/bin
+echo ""
+echo "... done"
+echo ""
