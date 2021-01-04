@@ -1,4 +1,3 @@
-![PFS154-Programmer r3-shield](./gerber_files/pfs154_programmer_shield.jpg)
 Hier war urspruenglich geplant, Schaltplan, Layout und Software fuer einen
 Arduino UNO basierenden Programmer fuer den PFS154 Mikrocontroller von
 Padauk zu veroeffentlich. Daraus entwickelt hat sich bei den Fragen nach
