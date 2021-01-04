@@ -4,7 +4,7 @@ js_12345678_55AA aus dem EEVblog), wollte ich einen Programmer haben, der
 (nicht nur fuer mich) wesentlich einfacher aufzubauen ist (einen
 Easy-PDK-Programmer Clone hatte ich bereits aufgebaut, aber eben wie der
 originale mit einem STM32F072. Dieser ist derzeit nur relativ teuer erhaetlich
-Ã¢â‚¬â€œ Stand 12.12.2020).
+(Stand 12.12.2020).
 
 Google-Ergebnisse geben da derzeit nur 2 Projekte aus, die nicht auf dem oben
 genannten Programmer basieren.
@@ -65,9 +65,11 @@ PFS154 erstellen und mit dem Programmer der Chip geflasht werden kann.
 
 Vorraussetzung fuer dieses Setup ist:
 
-- ein 64-Bit Linux System (bei Bedarf kann ich auch ein Setup fuer ein
-  32-Bit System erstellen, auf meinen Rechnern hier laeuft der Programmer auch
-  darauf sehr gut)
+- das System ist fuer ein 64-Bit Linux eingerichtet. Soll es auf einem 
+  32-Bit System laufen, so ist im Stammordner das Script:
+  
+                            ./setup32  
+  auszufuehren.
 
 - ein im System installierter SDCC ab der Version 4.0.3
 

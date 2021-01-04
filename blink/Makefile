@@ -19,7 +19,7 @@ INC_DIR       = -I./ -I../include
 #  1 : easypdkprogrammer  ==> serielle Portangabe kann frei bleiben
 #  2 : pfsprog            ==> benoetigt serielle Portangabe
 
-PROGRAMMER    = 1
+PROGRAMMER    = 2
 SERPORT       = /dev/ttyUSB0
 CH340RESET    = 1
 

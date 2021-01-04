@@ -1,12 +1,19 @@
+![PFS154-Programmer r3-shield](/gerber_files/pfs154_programmer_shield.jpg)
 Hier war urspruenglich geplant, Schaltplan, Layout und Software fuer einen
 Arduino UNO basierenden Programmer fuer den PFS154 Mikrocontroller von
 Padauk zu veroeffentlich. Daraus entwickelt hat sich bei den Fragen nach
-einer Toolchain und Beispielprogrammen eher ein komplettes Setup fier den
+einer Toolchain und Beispielprogrammen eher ein komplettes Setup fuer den
 Chip. Grundsaetzlich:<br>
 <br>
 - alle Beispiele sind Makefile-Projekte<br>
-- die Toolchain und alle hier enthaltenen Binaries sind ausschliesslich<br>
-Binaries fuer ein 64-Bit Linuxsystem, alle Programme sind Kommandozeilenprogramme<br>
+- die Toolchain und alle hier enthaltenen Binaries sind defaultmaessig <br>
+fuer ein 64-Bit Linuxsystem eingerichtet, alle Programme sind Kommando-<br>
+zeilenprogramme.<br>
+<br>
+Soll die Toolchain auf einem 32-Bit Linux laufen, so ist im Stammverzeichnis
+ das Script "setup32" auszufuehren:<br>
+<br>
+./setup32<br>
 <br>
 Die Toolchain ist eine reduzierter SDCC Compiler, bei dem alle Programmteile
 die nicht fuer das Programmieren eines Padauks Controllers benoetigt werden,
@@ -80,6 +87,11 @@ Die Firmware selbst ist daher auch nicht als Arduino-Sketch programmiert,
 sondern ist ein "normales" C-File, welches mit AVR-GCC kompiliert werden kann.
 Die Firmware wurde auch auf ATMega88 und Atmega168 getestet und funktioniert
 auf beiden Controllern.
+
+Gerberfiles, Schaltplan und Bilder finden sich im Verzeichnis:<br>
+<br>
+./gerber_files<br>
+<br>
 
 --------------------------------------------------------------------------------
 
