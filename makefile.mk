@@ -21,6 +21,8 @@ ifeq ($(INC_DIR),)
     INC_DIR  := -I../include/
 endif
 
+INC_DIR      += -I../tools/include
+
 # Compilersymbole (defines)
 CC_SYMBOLS   =
 
