@@ -21,8 +21,6 @@ ifeq ($(INC_DIR),)
     INC_DIR  := -I../include/
 endif
 
-INC_DIR      += -I../tools/include
-
 # Compilersymbole (defines)
 CC_SYMBOLS   =
 
@@ -88,7 +86,7 @@ CC_FLAGS    += --std-sdcc11 --opt-code-size
 
 all: clean $(OBJS)
 	@echo "Linking $(PROJECT).c with libs, Intel-Hex-File: $(PROJECT).ihx" 1>&2
-	$(CC) $(LIBSPEC) $(INC_DIR) --out-fmt-ihx $(OBJS) 1>&2
+	$(CC) -L ../tools/lib/ $(LIBSPEC) $(INC_DIR) --out-fmt-ihx $(OBJS) 1>&2
 #	$(OBJCOPY) -I ihex -O binary $(PROJECT).ihx $(PROJECT).bin	
 	@rm -f ../src/*.asm
 	@rm -f ../src/*.rst
@@ -161,6 +159,7 @@ ifeq ($(CH340RESET),1)
 	../tools/bin/ch340reset
 #	sleep 0.5
 endif
+
 	../tools/bin/pfsprog run $(SERPORT) $(NOWAIT) 1>&2
 endif
 
@@ -171,6 +170,7 @@ ifeq ($(CH340RESET),1)
 	../tools/bin/ch340reset
 #	sleep 0.5
 endif
+
 	../tools/bin/pfsprog stop $(SERPORT) $(NOWAIT) 1>&2
 endif
 
