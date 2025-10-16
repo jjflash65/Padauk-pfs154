@@ -13,36 +13,35 @@
 
    ------------------------------------------------------- */
 
-/*
-      Anschluss am Bsp. Pollin-Display C0802-04 an
-      einen ATtiny44
-      ---------------------------------------------------
-         o +5V
-         |                            Display                    PFS154
-         _                        Funktion   PIN            PIN    Funktion
-        | |
-        |_|                          GND      1 ------------
-         |                          +5V       2 ------------
-         o----o Kontrast   ---    Kontrast    3 ------------
-        _|_                           RS      4 ------------  9      PB0
-        \ /                          GND      5 ------------
-        -'-                    (Takt) E       6 ------------  8      PB1
-         |                           D4       7 ------------  2      PB2
-        --- GND                      D5       8 ------------  3      PB3
-                                     D6       9 ------------  6      PB4
-                                     D7      10 ------------  7      PB5
-*/
+/* -------------------------------------------------------
+      Pinbelegung
+      Anschluss Pollin-Display C0802-04 an den Controller
+    ---------------------------------------------------
+       o +5V
+       |                            Display                    PFS154
+       _                        Funktion   PIN            PIN    Funktion
+      | |
+      |_|                          GND      1 ------------
+       |                          +5V       2 ------------
+       o----o Kontrast   ---    Kontrast    3 ------------
+      _|_                           RS      4 ------------  13     PB0
+      \ /                          GND      5 ------------
+      -'-                    (Takt) E       6 ------------  14     PB1
+       |                           D4       7 ------------  15     PB2
+      --- GND                      D5       8 ------------  16     PB3
+                                   D6       9 ------------  1      PB4
+                                   D7      10 ------------  2      PB5
+
+   ------------------------------------------------------- */
+
 
 #ifndef in_txlcd
   #define in_txlcd
 
-#include <stdint.h>
-#include "pfs1xx_gpio.h"
-#include "delay.h"
+  #include <stdint.h>
+  #include "pfs1xx_gpio.h"
+  #include "delay.h"
 
-  /* -------------------------------------------------------
-        Pinbelegung
-     ------------------------------------------------------- */
 
   #define rs_init()      PB0_output_init()           // command / data
   #define e_init()       PB1_output_init()           // clock

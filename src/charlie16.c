@@ -167,7 +167,7 @@ void charlie16_mpxlines(void)
     charlie16_lineset(isr_cnt);                  // dann diese LED einschalten
   }
   isr_cnt++;
-  isr_cnt= isr_cnt % 16;
+  if (isr_cnt== 16) { isr_cnt= 0; }
 
 }
 

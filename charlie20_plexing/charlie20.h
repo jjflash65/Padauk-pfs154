@@ -41,7 +41,7 @@
 
   #include <stdint.h>
   #include <pdk/device.h>
-  #include "pfs1xx_gpio.h"
+  #include "pfs1xx_gpio3.h"
 
 /* -------------------------------------------------------
      wichtigte globale Variable:
@@ -65,30 +65,30 @@
   // Zuordnung LEDs zu GPIO-Anschluessen, Makros zum Setzen / Ruecksetzen von einzelnen
   // GPIO-Leitungen
 
-  #define charlieA_output()  PB1_output_init()
-  #define charlieA_input()   PB1_input_init()
-  #define charlieA_set()     PB1_set()
-  #define charlieA_clr()     PB1_clr()
+  #define charlieA_output()  PB3_output_init()
+  #define charlieA_input()   PB3_float_init()
+  #define charlieA_set()     PB3_set()
+  #define charlieA_clr()     PB3_clr()
 
-  #define charlieB_output()  PB2_output_init()
-  #define charlieB_input()   PB2_input_init()
-  #define charlieB_set()     PB2_set()
-  #define charlieB_clr()     PB2_clr()
+  #define charlieB_output()  PB4_output_init()
+  #define charlieB_input()   PB4_float_init()
+  #define charlieB_set()     PB4_set()
+  #define charlieB_clr()     PB4_clr()
 
-  #define charlieC_output()  PB3_output_init()
-  #define charlieC_input()   PB3_input_init()
-  #define charlieC_set()     PB3_set()
-  #define charlieC_clr()     PB3_clr()
+  #define charlieC_output()  PB5_output_init()
+  #define charlieC_input()   PB5_float_init()
+  #define charlieC_set()     PB5_set()
+  #define charlieC_clr()     PB5_clr()
 
-  #define charlieD_output()  PB4_output_init()
-  #define charlieD_input()   PB4_input_init()
-  #define charlieD_set()     PB4_set()
-  #define charlieD_clr()     PB4_clr()
+  #define charlieD_output()  PB6_output_init()
+  #define charlieD_input()   PB6_float_init()
+  #define charlieD_set()     PB6_set()
+  #define charlieD_clr()     PB6_clr()
 
-  #define charlieE_output()  PB5_output_init()
-  #define charlieE_input()   PB5_input_init()
-  #define charlieE_set()     PB5_set()
-  #define charlieE_clr()     PB5_clr()
+  #define charlieE_output()  PB7_output_init()
+  #define charlieE_input()   PB7_float_init()
+  #define charlieE_set()     PB7_set()
+  #define charlieE_clr()     PB7_clr()
 
   #define charlie20_bufset(nr)   (charlie20_buf |=  ( (uint32_t)1 << (uint32_t)nr ))
   #define charlie20_bufclr(nr)   (charlie20_buf &= ~( (uint32_t)1 << (uint32_t)nr ))

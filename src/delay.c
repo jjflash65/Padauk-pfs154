@@ -51,7 +51,13 @@ __asm
   subc  __delay_loop_16_PARM_1+1          ;   1 cycle
   mov   a, __delay_loop_16_PARM_1+0       ;   1 cycle
   or    a, __delay_loop_16_PARM_1+1       ;   1 cycle
+// nachfolgende Praeprozessoranweisung sind Aenderungen am
+// SDCC und dem dazugehoerenden Assembler geschuldet
+#if __SDCC_REVISION >= 13762
+  t1sn.io  f, z                           ;   1 cycle + 1 cycle for final skip
+#else
   t1sn  f, z                              ;   1 cycle + 1 cycle for final skip
+#endif
     goto 00001$                           ;   2 cycles
   // ret                                  ; 2 cycles
 __endasm;
@@ -84,7 +90,13 @@ __asm
   or    a, __delay_loop_32_PARM_1+1       ;   1 cycle
   or    a, __delay_loop_32_PARM_1+2       ;   1 cycle
   or    a, __delay_loop_32_PARM_1+3       ;   1 cycle
+// nachfolgende Praeprozessoranweisung sind Aenderungen am
+// SDCC und dem dazugehoerenden Assembler geschuldet
+#if __SDCC_REVISION >= 13762
+  t1sn.io  f, z                           ;   1 cycle + 1 cycle for final skip
+#else
   t1sn  f, z                              ;   1 cycle + 1 cycle for final skip
+#endif
     goto 00001$                           ;   2 cycles
   // ret                                  ; 2 cycles
 __endasm;

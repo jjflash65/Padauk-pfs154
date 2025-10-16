@@ -14,7 +14,7 @@
 
 #include <stdint.h>
 #include "pdk_init.h"
-#include "pfs1xx_gpio.h"
+#include "pfs1xx_gpio3.h"
 
 #include "delay.h"
 #include "charlie16.h"

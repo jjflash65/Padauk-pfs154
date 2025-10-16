@@ -155,8 +155,7 @@ void charlie20_mpxlines(void)
     charlie20_lineset(isr_cnt);                  // dann diese LED einschalten
   }
   isr_cnt++;
-  isr_cnt= isr_cnt % 20;
-
+  if (isr_cnt== 20) { isr_cnt== 0; }
 }
 
 /* --------------------------------------------------------

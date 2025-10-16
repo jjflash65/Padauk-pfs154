@@ -83,7 +83,7 @@ void uart_putchar(uint8_t ch)
                     uart_getchar
       Zeichen von serieller Schnittstelle lesen
    -------------------------------------------------- */
-char uart_getchar()
+char uart_getchar(void)
 {
   char ch= 0;
   uint8_t mask= 1;

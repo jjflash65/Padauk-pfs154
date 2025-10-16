@@ -6,7 +6,7 @@
      werden, da hier ausnahmsweise Code und Variable
      definiert sind.
 
-     Compiler  : SDCC 4.0.3
+     Compiler  : SDCC 4.0.3 .. 4.4.4
      MCU       : PFS154 / PFS173
 
      14.10.2020        R. Seelig
@@ -37,7 +37,7 @@
   uint8_t PBDIER_TMP= 0x00;
 
 /* ---------------------------------------------------------
-                  _sdcc_external_startup
+                  (_)_sdcc_external_startup
 
      Initialisierung des Systemtaktes. Ausnahmsweise MIT
      Codesequenz im Headerfile, weil diese Funktion nicht
@@ -48,7 +48,14 @@
      #define F_CPU vorhanden sein, weil nach dem Wert fuer
      F_CPU der Systemtakt des Controllers eingestellt wird
    --------------------------------------------------------- */
-  unsigned char _sdcc_external_startup(void)
+
+// SDCC verwendet je nach Version unterschiedliche Namen fuer denn Startup (doppelter
+// Unterstrich zu Beginn des Namens
+#if __SDCC_REVISION >= 13762
+  unsigned char __sdcc_external_startup(void)
+#else
+  unsigned char __sdcc_external_startup(void)
+#endif
   {
 
     #if (FACTORYCAL == 1)
@@ -94,7 +101,7 @@
       #endif
 
       // PDK_USE_FACTORY_TRIMMING();                          // It appears that the factory trimming is sometimes slightly off - possibly not done at 5V
-      EASY_PDK_CALIBRATE_IHRC(F_CPU,5000);
+      EASY_PDK_CALIBRATE_IHRC(F_CPU,4000);
     #endif
 
     return 0;
